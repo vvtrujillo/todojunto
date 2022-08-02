@@ -12,5 +12,4 @@ export class NuevoComponente extends Component{
             </div>
         );
     }
-
 }
