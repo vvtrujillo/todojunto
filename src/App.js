@@ -1,12 +1,14 @@
 import logo from './logo.svg';
 import './App.css';
-import {NuevoComponente} from './Componentes/NuevoComponente'
+import NuevoComponente from './Componentes/NuevoComponente'
 import { useState } from 'react';
 import { render } from '@testing-library/react';
 import {Form, input} from 'reactstrap'
-import { FormGroup, Input, Row, Col } from 'reactstrap';
+import { FormGroup, Input, Row, Col, p } from 'reactstrap';
 
 const App = () => {
+  
+  //var intervaloAmarillo;
 
   const[interruptor, setInterruptor] = useState({
     position: 'on',
@@ -17,12 +19,52 @@ const App = () => {
     alert('Presione el botón!!!');
   }
 
+  /*const funcIntervaloAmarillo = () => {
+
+    intervaloAmarillo = setInterval(cambiaColorAmarillo,1000);    
+  } */   
+
+  const recorreDivs = () => {
+
+    let arrayDiv = document.getElementsByClassName('circulo-semaforo');  
+
+    Array.from(arrayDiv).forEach(element => {
+      element.style.backgroundColor='';
+    })    
+
+  }
+
+  const cambiaColorAmarillo = () => {
+    setInterruptor({colorSem:'yellow'});
+    
+    recorreDivs();
+    document.getElementById('sem-amarillo').style.backgroundColor = interruptor.colorSem;
+    document.getElementById('sem-rojo').style.backgroundColor = '';
+    document.getElementById('sem-verde').style.backgroundColor = '';
+    console.log('color: ',interruptor.colorSem);
+  }
+
+  const cambiarColorVerde = () => {
+    setInterruptor({colorSem:'green'});
+    document.getElementById('sem-verde').style.backgroundColor = interruptor.colorSem;    
+    document.getElementById('sem-rojo').style.backgroundColor = '';
+    document.getElementById('sem-amarillo').style.backgroundColor = '';
+    console.log('color: ',interruptor.colorSem);
+  }
+  const cambiaColorRojo = () => {
+    setInterruptor({colorSem:'red'});
+    document.getElementById('sem-rojo').style.backgroundColor = interruptor.colorSem;    
+    document.getElementById('sem-amarillo').style.backgroundColor = '';
+    document.getElementById('sem-verde').style.backgroundColor = '';
+    console.log('color: ',interruptor.colorSem);
+  }
+
 
   const cambiaBoton = () => {
     
     console.log('ingreso position: ' + interruptor.position + ' colorSem: ' + interruptor.colorSem);
     
-    if(interruptor.position=='on'){
+    if(interruptor.position=='on'){      
 
       setInterruptor({position:'off',colorSem:'red'});      
       
@@ -35,38 +77,22 @@ const App = () => {
     console.log('salida position: ' + interruptor.position + ' colorSem: ' + interruptor.colorSem);
   }
 
-  return (    
-
+  return (
     <div>      
-      <Form className='form'>
-        <div className='col-md-6 container'>
-          <Row>
-            <Col md={6}>
-              <label>Nombre: </label>          
-              <Input type='text' placeholder='ingresa nombre...'></Input>        
-            </Col>            
-            <Col md={6}>
-              <label>Apellido: </label>          
-              <Input type='text' placeholder='ingresa apellido...'></Input>
-            </Col>            
-          </Row>
-          <Row>
-            <label>Dirección: </label>
-            <Input type='text' placeholder='ingresa dirección...'></Input>        
-          </Row>
-        </div>        
-      </Form>      
       <div className="App">
         {/*<p children={'Este es un hijo'}></p>
         <h1>Poner Todo Junto</h1>
-        <button onClick={presionaBoton}>Presioname</button>*/}
-        <button onClick={cambiaBoton} className='btn btn-primary'>{interruptor.position}</button>
+        <button onClick={presionaBoton}>Presioname</button>*/}        
+        <button onClick={cambiaColorAmarillo} className='btn btn-warning'>Amarillo</button>
+        <button onClick={cambiarColorVerde} className='btn btn-success'>Verde</button>
+        <button onClick={cambiaColorRojo} className='btn btn-danger'>Rojo</button>
+
         <div className='semaforo'>
-          <div className='circulo-semaforo' style={{backgroundColor: interruptor.colorSem}}></div>
-          <div className='circulo-semaforo' style={{backgroundColor: interruptor.colorSem}}></div>
-          <div className='circulo-semaforo' style={{backgroundColor: interruptor.colorSem}}></div>
+          <div className='circulo-semaforo' id='sem-rojo'></div>          
+          <div className='circulo-semaforo' id='sem-amarillo'></div>
+          <div className='circulo-semaforo' id='sem-verde'></div>
         </div>       
-        {/*<NuevoComponente header={"Header Props"}></NuevoComponente>*/}
+        <NuevoComponente cambiaColor={interruptor.colorSem}></NuevoComponente>
       </div>
     </div>    
   );

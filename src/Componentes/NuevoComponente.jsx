@@ -1,15 +1,15 @@
-import { Component } from "react";
 
-export class NuevoComponente extends Component{
 
-    render(){
-        return(
-            <div>                
-                <h1 style={{color:'red'}}>
-                    {this.props.header}
-                </h1>
-                {this.props.children}                
-            </div>
-        );
-    }
+const NuevoComponente = ({cambiaColor}) => {
+
+    console.log('nuevo componente: ', cambiaColor)
+    
+    return(
+        <div>                
+            <h1 style={{color: cambiaColor}}>color semaforo</h1>
+        </div>
+    );
+    
 }
+
+export default NuevoComponente;
